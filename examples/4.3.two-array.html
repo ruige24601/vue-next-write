@@ -1,0 +1,47 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render, effect, reactive } = Vue
+
+  let state = reactive({
+    name: 'vue-next',
+    count: 0,
+    toggle: true
+  })
+
+  function handleClick() {
+    state.toggle = !state.toggle
+  }
+
+  const arr1 = [
+    { type: 'div', props: { key: 'a' }, children: 'child a' },
+    { type: 'div', props: { key: 'b' }, children: 'child b' },
+    { type: 'div', props: { key: 'c' }, children: 'child c' }
+  ]
+
+  const arr2 = [
+    { type: 'div', props: { key: 'a' }, children: 'child a' },
+    { type: 'div', props: { key: 'c' }, children: 'child c' },
+    { type: 'div', props: { key: 'b' }, children: 'child b new' },
+    { type: 'div', props: { key: 'd' }, children: 'child d' }
+
+    // { type: 'div', props: { key: 'a' }, children: 'child a' },
+    // { type: 'div', props: { key: 'c' }, children: 'child c' },
+    // { type: 'div', props: { key: 'b' }, children: 'child b new' },
+    // { type: 'div', props: { key: 'd' }, children: 'child d' }
+  ]
+
+  effect(() => {
+    const VNode = {
+      type: 'div',
+      props: {
+        onClick: handleClick
+      },
+      children: state.toggle ? arr1 : arr2
+    }
+
+    render(VNode, root)
+  })
+</script>

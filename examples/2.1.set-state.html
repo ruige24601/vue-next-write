@@ -1,0 +1,73 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render } = Vue
+
+  let state = {
+    name: 'vue-next',
+    count: 0
+  }
+
+  function handleClick() {
+    const newCount = state.count + 1
+    setState({
+      count: newCount
+    })
+  }
+
+  render(
+    {
+      type: 'div',
+      props: null,
+      children: [
+        {
+          type: 'div',
+          props: null,
+          children: '被点击： ' + state.count
+        },
+        {
+          type: 'button',
+          props: {
+            onClick: handleClick
+          },
+          children: '点击'
+        }
+      ]
+    },
+    root
+  )
+
+  /**************  实现setState方法 *******************/
+  function setState(newState) {
+    // 修改state中的数据
+    state = {
+      ...state,
+      ...newState
+    }
+    console.log(state)
+    // 重新渲染视图
+    render(
+      {
+        type: 'div',
+        props: null,
+        children: [
+          {
+            type: 'div',
+            props: null,
+            children: '被点击： ' + state.count
+          },
+          {
+            type: 'button',
+            props: {
+              onClick: handleClick
+            },
+            children: '点击'
+          }
+        ]
+      },
+      root
+    )
+  }
+</script>

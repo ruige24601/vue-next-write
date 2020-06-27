@@ -1,0 +1,43 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  // DI: Dependency Injection 依赖注入
+  // 框架依赖了业务代码
+  // 为减少耦合，通过依赖注入的设计模式来解决
+  const { render, effect, reactive } = Vue
+
+  let state = reactive({
+    name: 'vue-next',
+    count: 0
+  })
+
+  function handleClick() {
+    state.count = state.count + 1
+  }
+
+  effect(() => {
+    render(
+      {
+        type: 'div',
+        props: null,
+        children: [
+          {
+            type: 'div',
+            props: null,
+            children: '被点击： ' + state.count
+          },
+          {
+            type: 'button',
+            props: {
+              onClick: handleClick
+            },
+            children: '点击'
+          }
+        ]
+      },
+      root
+    )
+  })
+</script>

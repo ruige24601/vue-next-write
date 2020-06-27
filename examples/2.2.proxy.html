@@ -1,0 +1,71 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render } = Vue
+
+  let state = reactive({
+    name: 'vue-next',
+    count: 0
+  })
+
+  function handleClick() {
+    state.count = state.count + 1
+  }
+
+  render(
+    {
+      type: 'div',
+      props: null,
+      children: [
+        {
+          type: 'div',
+          props: null,
+          children: '被点击： ' + state.count
+        },
+        {
+          type: 'button',
+          props: {
+            onClick: handleClick
+          },
+          children: '点击'
+        }
+      ]
+    },
+    root
+  )
+
+  /**************  实现proxy方法 *******************/
+  function reactive(target) {
+    return new Proxy(target, {
+      set(target, key, value, receiver) {
+        // target[key] = value
+        const res = Reflect.set(target, key, value, receiver)
+        render(
+          {
+            type: 'div',
+            props: null,
+            children: [
+              {
+                type: 'div',
+                props: null,
+                children: '被点击： ' + state.count
+              },
+              {
+                type: 'button',
+                props: {
+                  onClick: handleClick
+                },
+                children: '点击'
+              }
+            ]
+          },
+          root
+        )
+
+        return res
+      }
+    })
+  }
+</script>

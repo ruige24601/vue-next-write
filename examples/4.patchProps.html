@@ -1,0 +1,30 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render, effect, reactive } = Vue
+
+  let state = reactive({
+    name: 'vue-next',
+    count: 0,
+    toggle: true
+  })
+
+  function handleClick() {
+    state.toggle = !state.toggle
+  }
+
+  effect(() => {
+    const VNode = {
+      type: 'div',
+      props: {
+        style: state.toggle ? 'color: red' : 'color: blue',
+        onClick: handleClick
+      },
+      children: '文字的颜色'
+    }
+
+    render(VNode, root)
+  })
+</script>
