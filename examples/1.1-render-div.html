@@ -1,0 +1,20 @@
+<script src="../dist/vue-next-write.global.js"></script>
+
+<div id="root"></div>
+
+<script>
+  const { render } = Vue
+
+  const state = {
+    name: 'vue-next'
+  }
+
+  // <div>hello {{ name }}</div>
+  const VNode = {
+    type: 'div',
+    props: null,
+    children: 'hello ' + state.name
+  }
+
+  render(VNode, root)
+</script>
